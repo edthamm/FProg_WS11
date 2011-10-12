@@ -26,8 +26,10 @@ variations m r
     | m<r || r<0 || m<0 = (-1)
     | otherwise = binom (m,r) * fac r
 
---numberOfOcc :: Symbol -> Text -> NumberOf
-
+numberOfOcc :: Symbol -> Text -> NumberOf
+numberOfOcc _ [] = error "Program error: Result\n"
+numberOfOcc a (b:bs) = 1 + numberOfOcc a bs
+numberOfOcc a _ = error "Program error: kein Resultat\n"
 
 --mostCommonSymbol :: Text -> Symbol
 
