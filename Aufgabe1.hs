@@ -35,8 +35,14 @@ numberOfOcc a [] = 0 --this is needed for structure recognition the recursion mu
 
 
 
-mostCommonSymbol :: Text -> Symbol
-mostCommonSymbol [] = error "Program error: Result\n"
+{-mostCommonSymbol :: Text -> Symbol
+mostCommonSymbol (a:b:cs)
+
+mostCommonSymbol [a,b]
+    | a==b = a
+    | otherwise = error "kein Resultat"
+mostCommonSymbol [a] = a --this has unwanted side effects BBCCA -> A
+mostCommonSymbol [] = error "Resultat"-}
 
 
 -- helper functions for variations
