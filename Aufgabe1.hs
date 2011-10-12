@@ -32,13 +32,13 @@ numberOfOcc a (b:bs)
     | a==b = 1+(numberOfOcc a bs)
     | a/=b = 0+(numberOfOcc a bs)
 numberOfOcc a [] = 0
-numberOfOcc _ [] = error "Program error: Result\n"
-numberOfOcc a _ = error "Program error: kein Resultat\n"
 
 
 
---mostCommonSymbol :: Text -> Symbol
-
+mostCommonSymbol :: Text -> Symbol
+mostCommonSymbol [] = error "Program error: Result\n"
+{-mostCommonSymbol = error "Program error: kein Resultat\n"
+-}
 
 -- helper functions for variations
 
