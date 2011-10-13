@@ -53,8 +53,8 @@ symbolOcc [] = []
 
 containsEquals :: [NumberOf] -> Bool --checks to see if the list contains more than one entry that equals the maximum entry
 containsEquals x
-    | length(pick (maximum x) x )/= 1 = true
-    | otherwise = false
+    | length(pick (maximum x) x )/= 1 = True
+    | otherwise = False
 
 
 -- helper functions for variations
