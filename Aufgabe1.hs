@@ -35,17 +35,30 @@ numberOfOcc a [] = 0 --this is needed for structure recognition the recursion mu
 
 
 
-{-mostCommonSymbol :: Text -> Symbol
-mostCommonSymbol (a:b:cs)
+mostCommonSymbol :: Text -> Symbol
+mostCommonSymbol (x:xs)
+    | containsEquals (symbolOcc (x:xs)) = error "Kein Resultat" --if the list contains equals then since symbolOcc always reduces number of occurences per letter per 1 per read 2 or more letters must have had the same number of apperances in the input specification dictates throwing an error in this case
+	| numberOfOcc x (x:xs) == maximum (symbolOcc (x:xs)) = x -- there is only on maximum go on and find the fitting letter
+	| numberOfOcc x (x:xs) /= maximum (symbolOcc (x:xs)) = mostCommonSymbol xs -- this is not the onw looked for search on
+mostCommonSymbol [a] = a --that was easy
+mostCommonSymbol [] = error "Resultat" -- see spec
 
-mostCommonSymbol [a,b]
-    | a==b = a
-    | otherwise = error "kein Resultat"
-mostCommonSymbol [a] = a --this has unwanted side effects BBCCA -> A
-mostCommonSymbol [] = error "Resultat"-}
+
+-- helper functions for mostCommonSymbol
+
+
+symbolOcc :: Text->[NumberOf] -- constructs a list on how often the letter on this position appears from this position onward
+symbolOcc (x:xs) = (numberOfOcc x (x:xs)): symbolOcc xs
+symbolOcc [] = []
+
+containsEquals :: [NumberOf] -> Bool --checks to see if the list contains more than one entry that equals the maximum entry
+containsEquals x
+    | length(pick (maximum x) x )/= 1 = true
+    | otherwise = false
 
 
 -- helper functions for variations
+
 
 binom :: (Integer,Integer) -> Integer --one needs binomial coefficient to calculate the number of variations this code was discussed in the lecture
 binom (n,k)
