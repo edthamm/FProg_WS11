@@ -3,17 +3,31 @@
 
 Aufgabe1.hs
 erstellt von:
-) Matthias Krug
+) Matthias Krug 0828965
 ) Eduard Thamm 0525087
 
 ############################################################
 -}
 
+pick :: Integer -> [Integer] -> [Integer]
+pick n []       = []
+pick n (x:xs)
+	| n == x    = x : pick n xs -- if equal "print" number
+	| otherwise = pick n xs -- recursive call
 
---pick :: Integer -> [Integer] -> [Integer]
-
-
---pickAll :: [Integer] -> [Integer] -> [Integer]
+ 
+pickAll :: [Integer] -> [Integer] -> [Integer]
+pickAll [] _      = [] -- empty input => empty output
+pickAll _ []      = [] -- empty input => empty output
+pickAll (xs) (ys) = [z | z <- ys, _exists z xs]	
+	
+-- helper function for pickAll
+-- checks if an integer exists in the given list
+_exists :: Integer -> [Integer] -> Bool
+_exists n [] = False
+_exists n (x:xs)
+	| n == x = True
+	| otherwise = _exists n xs
 
 
 -- Typedefs as taken form specification
