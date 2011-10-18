@@ -58,12 +58,9 @@ numberOfOcc a [] = 0 --this is needed for structure recognition the recursion mu
 
 mostCommonSymbol :: Text -> Symbol
 mostCommonSymbol [] = error "Resultat" -- see spec
-mostCommonSymbol [a] = a --that was easy
 mostCommonSymbol l
-    | length reversed == 1 = head(head(reversed))
-    | length first == length second = error "Kein Resultat"
-
- --idea sort the input, then group it in to lists (at this point we have a list of lists), sort this ascending(did not find a desc. sort), reverse it, if the first 2 elems are of the same length error
+    | length reversed == 1 = head(head(reversed)) --list containing only one letter 
+    | length first == length second = error "Kein Resultat" --idea sort the input, then group it in to lists (at this point we have a list of lists), sort this ascending(did not find a desc. sort), reverse it, if the first 2 elems are of the same length error
     | otherwise = head(head(reversed)) --if not return the first elem of the first elem
         where
             first = head reversed
