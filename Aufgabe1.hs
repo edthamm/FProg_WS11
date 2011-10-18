@@ -3,7 +3,6 @@ module Aufgabe1 where
 import List
 import Data.Ord(comparing)
 import Data.List
-import Debug.Trace
 {-
 ############################################################
 
@@ -78,7 +77,7 @@ mostCommonSymbol l
 -- helper functions for mostCommonSymbol
 
 lsort :: [[a]] -> [[a]]
-lsort = sortBy (comparing length)
+lsort = sortBy (comparing length) -- sorts a list of lists by length of sublists
 
 
 
