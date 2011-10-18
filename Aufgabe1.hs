@@ -55,8 +55,17 @@ numberOfOcc a [] = 0 --this is needed for structure recognition the recursion mu
 
 mostCommonSymbol :: Text -> Symbol
 mostCommonSymbol (x:xs)
-    | length head reverse lsort group sort (x:xs) == length head tail reverse  lsort group sort (x:xs) = error "Kein Resultat"
-    | otherwise = head(head(reverse (lsort (group (sort(x:xs))))))
+    | length head reverse lsort group sort (x:xs) == length head tail reverse  lsort group sort (x:xs) = error "Kein Resultat" --idea sort the input, then group it in to lists (at this point we have a list of lists), sort this ascending(did not find a desc. sort), reverse it, if the first 2 elems are of the same length error
+    | otherwise = head(head(reverse (lsort (group (sort(x:xs)))))) --if not return the first elem of the first elem
+{-
+E.G.:
+[Bananen]
+[Bnnnaae]
+[[B][nnn][aa][e]]
+[[B][e][aa][nnn]]
+[[nnn][aa][e][B]]
+n
+-}
 mostCommonSymbol [a] = a --that was easy
 mostCommonSymbol [] = error "Resultat" -- see spec
 
