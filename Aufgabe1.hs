@@ -1,5 +1,7 @@
 module Aufgabe1 where
 
+import List
+import Data.Ord(comparing)
 import Data.List
 import Debug.Trace
 {-
@@ -59,6 +61,7 @@ mostCommonSymbol :: Text -> Symbol
 mostCommonSymbol [] = error "Resultat" -- see spec
 mostCommonSymbol [a] = a --that was easy
 mostCommonSymbol l
+    | length reversed == 1 = head(head(reversed))
     | length first == length second = error "Kein Resultat"
 
  --idea sort the input, then group it in to lists (at this point we have a list of lists), sort this ascending(did not find a desc. sort), reverse it, if the first 2 elems are of the same length error
@@ -79,6 +82,11 @@ E.G.:
 [[nnn][aa][e][B]]
 n
 -}
+
+-- heloer functions for mostCommonSymbol
+
+lsort :: [[a]] -> [[a]]
+lsort = sortBy (comparing length)
 
 
 
