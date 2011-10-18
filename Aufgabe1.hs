@@ -67,23 +67,15 @@ mostCommonSymbol l
  --idea sort the input, then group it in to lists (at this point we have a list of lists), sort this ascending(did not find a desc. sort), reverse it, if the first 2 elems are of the same length error
     | otherwise = head(head(reversed)) --if not return the first elem of the first elem
         where
-            first = trace ("First: "++show(second)) head reversed
-	    second = trace ("Second: "++show(reversed)) head (tail reversed)
-	    reversed = trace ("Rev: "++show(listsorted)) reverse listsorted
-	    listsorted = trace("Group"++show(grouped)) lsort grouped
-	    grouped = trace ("Sorted: "++show(sorted)) group sorted 
+            first = head reversed
+	    second = head (tail reversed)
+	    reversed = reverse listsorted
+	    listsorted = lsort grouped
+	    grouped = group sorted 
 	    sorted = sort l 
-{-
-E.G.:
-[Bananen]
-[Bnnnaae]
-[[B][nnn][aa][e]]
-[[B][e][aa][nnn]]
-[[nnn][aa][e][B]]
-n
--}
 
--- heloer functions for mostCommonSymbol
+
+-- helper functions for mostCommonSymbol
 
 lsort :: [[a]] -> [[a]]
 lsort = sortBy (comparing length)
