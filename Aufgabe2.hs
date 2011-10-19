@@ -1,4 +1,4 @@
-module Aufgabe1 where
+module Aufgabe2 where
 
 
 
@@ -12,3 +12,22 @@ erstellt von:
 
 ############################################################
 -}
+
+
+--istPrimal :: Integer -> Bool
+
+
+--faktorisiere :: Integer -> [(Integer,Integer)]
+
+type Editor = String
+type Suchzeichenreihe = String
+type Index = Integer
+type Vorkommen = Integer
+type Alt = String
+type Neu = String
+
+--suche :: Editor -> Suchzeichenreihe-> Index
+
+--suche :: Editor ->Suchzeichenreihe -> [Index]
+
+--ersetze :: Editor ->Vorkommen -> Alt -> Neu -> Editor
