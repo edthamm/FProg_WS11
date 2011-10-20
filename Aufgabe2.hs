@@ -36,10 +36,10 @@ suche (e:es) (s:ss)
 {-sucheAlle :: Editor ->Suchzeichenreihe -> [Index]
 sucheAlle (e:es) (s:ss)
     | not (isInfixOf (s:ss) (e:es)) = []
-    | partialsuche /= -1 = partialsuche:[ x + length (s:ss)| x <- (sucheAlle verkürzterText (s:ss))] --idea check if the first length s elements fit if yes add to list, need to add lentgh of s times number of striped beginnings
-    | otherwise = []:[ x + length (s:ss)| x <- (sucheAlle verkürzterText (s:ss))]
+    | length(e:es)> length(s:ss) && partialsuche = partialsuche:[ x + length (s:ss)| x <- (sucheAlle verkürzterText (s:ss))] --idea check if the first length s elements fit if yes add to list, need to add lentgh of s times number of striped beginnings
+    | otherwise = []-- :[ x + length (s:ss)| x <- (sucheAlle verkürzterText (s:ss))]
     where 
-        partialsuche = suche (subtext (e:es) (s:ss)) (s:ss)
+        partialsuche = isInfixOf (subtext (e:es) (s:ss)) (s:ss)
         verkürzterText = stripPräfix (subtext (e:es) (s:ss)) (e:es) -- hier liegt das problem vermutlich bekomme ich aus subtext nicht immer was gutes zurück
         subtext (e:es) (s:ss) = take (length (s:ss)) (e:es)-}
         
