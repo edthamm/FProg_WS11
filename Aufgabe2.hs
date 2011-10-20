@@ -44,4 +44,18 @@ sucheAlle (e:es) (s:ss)
         subtext (e:es) (s:ss) = take (length (s:ss)) (e:es)-}
 
 
---ersetze :: Editor ->Vorkommen -> Alt -> Neu -> Editor
+{-ersetze :: Editor ->Vorkommen -> Alt -> Neu -> Editor
+ersetze e vk a n
+    | (vk-1) > vorkommenshaufigkeit || vk < 0 = e
+    | otherwise = (take i e) ++ n ++ ende
+    where
+        vorkommenshaufigkeit = length(indizes)
+        indizes = sucheAlle e a
+        i = indizes !! (vk-1) CC get the vkth apperance of substring
+        ende = reverse(geschnundrev)
+        geschnundrev = take ((length e)-(i+length(a))) rev
+        rev = reverse e
+        CC idea take all the letters till the one we want to replace from (i.e. i) then concat the replacement string, then take what is after te string to be replaced
+        CC to get the later reverse the string, then calculate how many to take (total length - (length of string to be replaced + length of string already taken)), take them and reverse
+        CC again
+-}
