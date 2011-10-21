@@ -54,10 +54,11 @@ _getFactors x y
 	| y == 1 = []
 	-- bedingungen: 
 	-- 1) nur zahlen die sich "sauber" dividieren lassen
-	-- 2) das ergebnise der division muss kleiner sein als y um doppelte ergebnisse zu verhindert (x,y) == (y,x)
+	-- [2) das ergebnise der division muss kleiner sein als y um doppelte ergebnisse zu verhindert (x,y) == (y,x)]  && y > (div x y)
 	-- 3) y muss aus der menge P sein
 	-- 4) x/y muss aus der menge P sein
-	| ((mod x y) == 0 && y > (div x y) && (_inP y) == True && (_inP (div x y)) == True) = (y, (div x y)) : (_getFactors x (y-1))
+	-- doppelte elemente sind enthalten: zum entfernen bedingung 2 hinzufuegen
+	| ((mod x y) == 0 && (_inP y) == True && (_inP (div x y)) == True) = (y, (div x y)) : (_getFactors x (y-1))
 	-- y dekrementieren und erneut versuchen
 	| otherwise = (_getFactors x (y-1))
 	
