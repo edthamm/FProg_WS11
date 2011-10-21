@@ -13,11 +13,54 @@ erstellt von:
 ############################################################
 -}
 
+-- checks if a number is primal
+istPrimal :: Integer -> Bool
+istPrimal n
+	| (_inP n) == False = False
+	| otherwise = _inList n (_sieve[2..n])
 
---istPrimal :: Integer -> Bool
+-- helper functions for istPrimal
+-- sieb des eratosthenes
+_sieve :: [Integer] -> [Integer]
+_sieve [] = []
+_sieve (x:xs) = x : _sieve [y | y <- xs, mod y x > 0]
 
+-- checks if a number is a prime
+_inList :: Integer -> [Integer] -> Bool
+_inList _ [] = False
+_inList n (x:xs)
+	-- n == x => element ist in der liste
+	| n == x = True
+	| length xs == 0 = False
+	| otherwise = _inList n xs
 
---faktorisiere :: Integer -> [(Integer,Integer)]
+-- checks if a number is in P: (1+4n | n <- IN)
+_inP :: Integer -> Bool
+_inP n
+	| (mod (n-1) 4) == 0 = True
+	| otherwise = False
+
+-- faktorisiert eine zahl
+faktorisiere :: Integer -> [(Integer, Integer)]
+faktorisiere n
+	| (_inP n) == False = error "Unzulaessig"
+	| otherwise = (_getFactors n (n-1))
+
+-- helper function for faktorisiere
+-- findet alle faktorisierungen einer zahl aus P die wieder in der menge P sind
+_getFactors :: Integer -> Integer -> [(Integer, Integer)]
+_getFactors x y
+	-- verhindert divisionen durch 0 und die faktorbildung x*1
+	| y == 1 = []
+	-- bedingungen: 
+	-- 1) nur zahlen die sich "sauber" dividieren lassen
+	-- 2) das ergebnise der division muss kleiner sein als y um doppelte ergebnisse zu verhindert (x,y) == (y,x)
+	-- 3) y muss aus der menge P sein
+	-- 4) x/y muss aus der menge P sein
+	| ((mod x y) == 0 && y > (div x y) && (_inP y) == True && (_inP (div x y)) == True) = (y, (div x y)) : (_getFactors x (y-1))
+	-- y dekrementieren und erneut versuchen
+	| otherwise = (_getFactors x (y-1))
+	
 
 type Editor = String
 type Suchzeichenreihe = String
