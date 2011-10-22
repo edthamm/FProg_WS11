@@ -80,13 +80,14 @@ suche (e:es) (s:ss)
 sucheAlle :: Editor ->Suchzeichenreihe -> [Index]
 sucheAlle [] _ = []
 sucheAlle (e:es) s
-    | not (isInfixOf s (e:es)) = []
+    | not (isInfixOf s (e:es)) = [] -- if its not contained return empty
     | suche subtext s /= (-1) = suche subtext s :[i + toInteger((length s))| i <- sucheAlle (verkText (length s) (e:es)) s]
-    | suche subtext s == (-1) = [i + 1| i <- sucheAlle es s] --on a no match going forward 1 will do just finr
-        where partialSuche = suche subtext s
+    -- on a match go forward length of search string
+    | suche subtext s == (-1) = [i + 1| i <- sucheAlle es s] --on a no match going forward 1 letter
+        where partialSuche = suche subtext s --if I try to put this in hugs yells at me where did i format wrongly
               subtext = take (length s) (e:es)
               
-
+--helperfunction for sucheAlle
 verkText :: Int -> Editor -> Editor
 verkText a (b:bs)
     | a >= length (b:bs) = []
@@ -97,9 +98,9 @@ verkText a (b:bs)
 ersetze :: Editor ->Vorkommen -> Alt -> Neu -> Editor
 ersetze e vk a n
     | (vk-1) > vorkommenshaufigkeit || vk < 0 = e
-    | otherwise = (take i e) ++ n ++ ende
+    | otherwise = (take (fromIntegral i) e) ++ n ++ ende
     where
-        vorkommenshaufigkeit = toInteger(length(indizes))
+        vorkommenshaufigkeit = toInteger(length(indizes)-1)
         indizes = sucheAlle e a
         i = indizes !! fromIntegral((vk-1)) -- get the vkth apperance of substring
         ende = reverse(geschnundrev)
