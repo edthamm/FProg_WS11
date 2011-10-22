@@ -100,9 +100,9 @@ ersetze e vk a n
     where
         vorkommenshaufigkeit = toInteger(length(indizes))
         indizes = sucheAlle e a
-        i = indizes !! (vk-1) -- get the vkth apperance of substring
+        i = indizes !! fromIntegral((vk-1)) -- get the vkth apperance of substring
         ende = reverse(geschnundrev)
-        geschnundrev = take ((length e)-(i+length(a))) rev
+        geschnundrev = take ((length e)-(fromIntegral(i)+length(a))) rev
         rev = reverse e
         -- idea take all the letters till the one we want to replace from (i.e. i) then concat the replacement string, then take what is after te string to be replaced
         -- to get the later reverse the string, then calculate how many to take (total length - (length of string to be replaced + length of string already taken)), take them and reverse
