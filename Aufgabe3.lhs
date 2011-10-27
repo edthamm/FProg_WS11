@@ -1,4 +1,4 @@
->module Aufgabe2 where
+>module Aufgabe3 where
 
 >import Data.List
 
