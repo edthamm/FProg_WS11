@@ -12,3 +12,16 @@ erstellt von:
 
 ############################################################
 
+>type Matrix = [[Integer]]
+>type Zeilen = Integer
+>type Spalten = Integer
+>type Fuellwert = Integer
+>type Laenge = Integer
+
+anp1 :: [[Integer]] -> Matrix
+
+anp2 :: [[Integer]] -> Zeilen -> Spalten -> Fuellwert -> Matrix
+
+transp :: [[Integer]] -> Zeilen -> Spalten -> Fuellwert -> Matrix
+
+sp :: [[Integer]] -> [[Integer]] -> Laenge -> Fuellwert -> Integer
