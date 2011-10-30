@@ -1,0 +1,75 @@
+Punkte pro Testfall: 5; Abzug pro fehlerhaften Testfall: 0; Maximum: 20 
+
+Testfall: {-1,1-}[i|i<-[1377],istPrimal i] == []; Testfall OK 
+Testfall: {-1,2-}[i|i<-[(-5)..9],istPrimal i]  ; Testfall FALSCH 
+Erwartet: {-1,2-}[i|i<-[(-5)..9],istPrimal i] == [5,9] 
+Ausgabe:  {-1,2-}[i|i<-[(-5)..9],istPrimal i] ==[5]   
+Testfall: {-1,2p-}[i|i<-[(-5)..9],istPrimal i]  ; Testfall FALSCH 
+Erwartet: {-1,2p-}[i|i<-[(-5)..9],istPrimal i] == [1,5,9] 
+Ausgabe:  {-1,2p-}[i|i<-[(-5)..9],istPrimal i] ==[5]   
+Testfall: {-1,3-}[i|i<-[10..50],istPrimal i]  ; Testfall FALSCH 
+Erwartet: {-1,3-}[i|i<-[10..50],istPrimal i] == [13,17,21,29,33,37,41,49] 
+Ausgabe:  {-1,3-}[i|i<-[10..50],istPrimal i] ==[13,17,29,37,41]   
+Testfall: {-1,4-}[i|i<-[51..99],istPrimal i]  ; Testfall FALSCH 
+Erwartet: {-1,4-}[i|i<-[51..99],istPrimal i] == [53,57,61,69,73,77,89,93,97] 
+Ausgabe:  {-1,4-}[i|i<-[51..99],istPrimal i] ==[53,61,73,89,97]   
+
+Testfaelle OK: 1; Testfaelle FALSCH: 4
+Punkte : 5
+
+Punkte pro Testfall: 4; Abzug pro fehlerhaften Testfall: 0; Maximum: 20 
+
+Testfall: {-2,1-}faktorisiere 1  ; Testfall FALSCH 
+Erwartet: {-2,1-}faktorisiere 1 == [] 
+Ausgabe:  {-2,1-}faktorisiere 1 ==   
+Testfall: {-2,1p-}faktorisiere 1  ; Testfall FALSCH 
+Erwartet: {-2,1p-}faktorisiere 1 == [(1,1)] 
+Ausgabe:  {-2,1p-}faktorisiere 1 ==   
+Testfall: {-2,2-}[(n,i,j)|n<-[1+4*n|n<-[1..22]],(i,j)<-faktorisiere n,i*j/=n] == []; Testfall OK 
+Testfall: {-2,3-}[(n,i,j)|n<-[1+4*n|n<-[1..22]],(i,j)<-faktorisiere n,i<2||j<2] == []; Testfall OK 
+Testfall: {-2,4-}[length$faktorisiere n|n<-[1+4*n|n<-[1..22]]] == [0,0,0,0,0,1,0,0,0,0,2,0,0,0,0,2,0,0,0,1,2,0]; Testfall OK 
+Testfall: {-2,5-}[(i,j)|m<-[4..15],i<-[2..(m-2)],j<-[m-i],((i*j)-1)`mod`4==0,notElem(i,j)(faktorisiere(i*j))] == [(3,3),(3,7),(7,3),(3,11),(7,7),(11,3)]; Testfall OK 
+
+Testfaelle OK: 4; Testfaelle FALSCH: 2
+Punkte : 16
+
+Punkte pro Testfall: 4; Abzug pro fehlerhaften Testfall: 0; Maximum: 20 
+
+Testfall: {-3,1-}[suche "Sein oder Nichtsein, das ist hier die Frage." s|s<-["ei","sein","seit","Ei"]]  == [1,15,(-1),(-1)]; Testfall OK 
+Testfall: {-3,2-}suche "ei" "ei" == 0; Testfall OK 
+Testfall: {-3,3-}suche "ei" ""  ; Testfall FALSCH 
+Erwartet: {-3,3-}suche "ei" "" == 0 
+Ausgabe:  {-3,3-}suche "ei" "" ==   
+Testfall: {-3,4-}suche "" "e"  ; Testfall FALSCH 
+Erwartet: {-3,4-}suche "" "e" == (-1) 
+Ausgabe:  {-3,4-}suche "" "e" ==   
+Testfall: {-3,5-}suche "a" "ab" == (-1); Testfall OK 
+
+Testfaelle OK: 3; Testfaelle FALSCH: 2
+Punkte : 12
+
+Punkte pro Testfall: 4; Abzug pro fehlerhaften Testfall: 0; Maximum: 20 
+
+Testfall: {-4,1-}[sucheAlle "Sein oder Nichtsein, das ist hier die Frage." s|s<-["ei","sein","seit"]] == [[1,16],[15],[]]; Testfall OK 
+Testfall: {-4,2-}head (sucheAlle "Mississippi." "issi") == 1; Testfall OK 
+Testfall: {-4,3-}sucheAlle "Mississippi." "ppii" == []; Testfall OK 
+Testfall: {-4,4-}[i|i<-(sucheAlle "aaaaaa" "aa"),elem i[0,2,4]] == [0,2,4]; Testfall OK 
+Testfall: {-4,5-}sucheAlle "abc" ""  ; Testfall FALSCH 
+Erwartet: {-4,5-}sucheAlle "abc" "" == [0,1,2,3] 
+Ausgabe:  {-4,5-}sucheAlle "abc" "" ==   
+
+Testfaelle OK: 4; Testfaelle FALSCH: 1
+Punkte : 16
+
+Punkte pro Testfall: 5; Abzug pro fehlerhaften Testfall: 0; Maximum: 20 
+
+Testfall: {-5,1-}[ersetze "Sein oder Nichtsein." i s r|(i,s,r)<-[(2,"ein",""),(2,"sein","mein"),(1,"sein","mein"),(-3,"ei","mein")]] == ["Sein oder Nichts.","Sein oder Nichtsein.","Sein oder Nichtmein.","Sein oder Nichtsein."]; Testfall OK 
+Testfall: {-5,2-}ersetze "Mississippi." 1 "issi" "abc" == "Mabcssippi."; Testfall OK 
+Testfall: {-5,3-}elem(ersetze "Mississippi." 2 "issi" "abc")["Mississippi.","Missabcppi."] == True; Testfall OK 
+Testfall: {-5,4-}elem(ersetze "aaaaaa" 2 "aa" "bb")["aabbaa","abbaaa"] == True; Testfall OK 
+
+Testfaelle OK: 4; Testfaelle FALSCH: 0
+Punkte : 20
+
+Punkte gesamt: 69
+
