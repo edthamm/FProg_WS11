@@ -71,8 +71,8 @@ type Alt = String
 type Neu = String
 
 suche :: Editor -> Suchzeichenreihe-> Index
-suche _ "" = 0
-suche "" _ = (-1)
+suche _ "" = 0 --see testcases
+suche "" _ = (-1) --see testcases
 suche (e:es) (s:ss)
     | not (isInfixOf (s:ss) (e:es)) = (-1)
     | take (length (s:ss)) (e:es) /= (s:ss) = (suche es (s:ss)) + 1
@@ -81,6 +81,7 @@ suche (e:es) (s:ss)
 
 sucheAlle :: Editor ->Suchzeichenreihe -> [Index]
 sucheAlle [] _ = []
+sucheAlle xs "" = [0..genericLength xs]
 sucheAlle (e:es) s
     | not (isInfixOf s (e:es)) = [] -- if its not contained return empty
     | suche subtext s /= (-1) = suche subtext s :[i + toInteger((length s))| i <- sucheAlle (verkText (length s) (e:es)) s]
