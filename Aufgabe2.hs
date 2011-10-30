@@ -71,6 +71,8 @@ type Alt = String
 type Neu = String
 
 suche :: Editor -> Suchzeichenreihe-> Index
+suche _ "" = 0
+suche "" _ = (-1)
 suche (e:es) (s:ss)
     | not (isInfixOf (s:ss) (e:es)) = (-1)
     | take (length (s:ss)) (e:es) /= (s:ss) = (suche es (s:ss)) + 1
