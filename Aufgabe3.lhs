@@ -38,6 +38,8 @@ what happens here is the interesting part first we take all the first elements a
 
 >transpose x = (map head x) : transpose (map tail x)
 
+
+So our job here is to calculate a scalar product, just to make it a little harder, we have to extract our two vectors out of matrices, and this is what we do here
  
 >sp :: [[Integer]] -> [[Integer]] -> Laenge -> Fuellwert -> Integer
 
@@ -47,7 +49,7 @@ This is a little helper where sp actually is calcualted feed this with the corre
 >scalprod :: [Integer] -> [Integer] -> Integer
 >scalprod a b 
 
-check for erronous input if input is ok then calculate the sp
+check for erronous input if input is ok then calculate the sp, basically take the vectors component wise multiply those and put them in to a vector, thenn sum up that vector
 
 >    | length a == length b = sum (zipWith (*) a b)
 >    | otherwise = error "Vector sizes must match"
