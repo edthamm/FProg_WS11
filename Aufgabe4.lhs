@@ -12,18 +12,18 @@ erstellt von:
 
 ############################################################
 
-type Matrix = [[Integer]]
-type Skalar = Integer
-type Zeilen = Integer
-type Spalten = Integer
-type SpaZei = Integer
-type Fuellwert = Integer
-type ProtoMatrix = ([[Integer]],Zeilen,Spalten,Fuellwert)
-type Typung_mnpw = (Zeilen,SpaZei,Spalten,Fuellwert)
-type Typung_mnw = (Zeilen,Spalten,Fuellwert)
-type Typung_mw = (SpaZei,Fuellwert)
-type Potenz = Integer
-type ProtoprotoMatrix = [[Integer]]
+>type Matrix = [[Integer]]
+>type Skalar = Integer
+>type Zeilen = Integer
+>type Spalten = Integer
+>type SpaZei = Integer
+>type Fuellwert = Integer
+>type ProtoMatrix = ([[Integer]],Zeilen,Spalten,Fuellwert)
+>type Typung_mnpw = (Zeilen,SpaZei,Spalten,Fuellwert)
+>type Typung_mnw = (Zeilen,Spalten,Fuellwert)
+>type Typung_mw = (SpaZei,Fuellwert)
+>type Potenz = Integer
+>type ProtoprotoMatrix = [[Integer]]
 
 msk :: ProtoMatrix -> Skalar -> Matrix
 
