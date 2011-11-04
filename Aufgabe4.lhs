@@ -29,8 +29,7 @@ erstellt von:
 
 Ok first we normalize to call scale
 
-> msk m s = scale s (anp2(m))
-TODO read out m
+> msk (m,z,s,f) s = scale s (anp2(m z s f))
 
 Then we take a look at the helper function.
 It takes a number and a list of lists of numbers and
@@ -40,11 +39,32 @@ It takes a number and a list of lists of numbers and
 
 then simply maps the lists which have in turn had their elements mapped and multiplyed by s together.
 
-mm :: ProtoprotoMatrix -> ProtoprotoMatrix -> Typung mnpw -> Matrix
+> mm :: ProtoprotoMatrix -> ProtoprotoMatrix -> Typung_mnpw -> Matrix
 
-ms :: ProtoprotoMatrix -> ProtoprotoMatrix -> Typung mnw -> Matrix
+This is the fitting step. Normalize everything the way we are supposed to.
 
-mp :: ProtoprotoMatrix -> Typung mw -> Potenz -> Matrix
+> mm a b (m,n,p,f) = mult (anp2(a m n f)) (anp2(b n p f))
+
+After that we once again call a little helper
+
+> mult :: Num a => Matrix -> Matrix -> Matrix
+
+multiplying 2 matrices involves multiplying rows an colums. since we have no easy aces to colums we use transpose to get it.
+we then simply zip the rows (remember we just transposed b) with *, we then sum up and map back to our original shape. 
+
+> mult a b = [map (sum . zipWith (*) r) $ transpose b | r <- a]
+
+
+ms :: ProtoprotoMatrix -> ProtoprotoMatrix -> Typung_mnw -> Matrix
+
+mp :: ProtoprotoMatrix -> Typung_mw -> Potenz -> Matrix
+
+
+These are the functions taken from exercise 3:
+
+>transpose :: Matrix -> Matrix
+>transpose ([]:_) = []
+>transpose a = (map head a) : transpose (map tail a)
 
 
 TODO cut and paste anp2
