@@ -37,7 +37,8 @@ It takes a number and a list of lists of numbers and
 > scale :: Num a => a -> [[a]] -> [[a]]
 > scale = map.map.(*)
 
-then simply maps the lists which have in turn had their elements mapped and multiplyed by s together.
+then simply maps the lists which have in turn had their elements mapped and multiplyed by s together. this could also be achieved by doing a doulbe list comprahension, but 
+that would be a lot harder to read
 
 > mm :: ProtoprotoMatrix -> ProtoprotoMatrix -> Typung_mnpw -> Matrix
 
@@ -49,8 +50,9 @@ After that we once again call a little helper
 
 > mult :: Num a => Matrix -> Matrix -> Matrix
 
-multiplying 2 matrices involves multiplying rows an colums. since we have no easy aces to colums we use transpose to get it.
-we then simply zip the rows (remember we just transposed b) with *, we then sum up and map back to our original shape. 
+multiplying 2 matrices involves multiplying row values and colums values and summing them up. since we have no easy access to colums we use transpose to get it.
+we then simply zip the rows (remember we just transposed b) with *, we then sum up and map those sums in to a list, we then use list comprahension,
+to get the desired list of lists.
 
 > mult a b = [map (sum . zipWith (*) r) $ transpose b | r <- a]
 
