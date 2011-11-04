@@ -25,10 +25,26 @@ erstellt von:
 >type Potenz = Integer
 >type ProtoprotoMatrix = [[Integer]]
 
-msk :: ProtoMatrix -> Skalar -> Matrix
+> msk :: ProtoMatrix -> Skalar -> Matrix
+
+Ok first we normalize to call scale
+
+> msk m s = scale s (anp2(m))
+TODO read out m
+
+Then we take a look at the helper function.
+It takes a number and a list of lists of numbers and
+
+> scale :: Num a => a -> [[a]] -> [[a]]
+> scale = map.map.(*)
+
+then simply maps the lists which have in turn had their elements mapped and multiplyed by s together.
 
 mm :: ProtoprotoMatrix -> ProtoprotoMatrix -> Typung mnpw -> Matrix
 
 ms :: ProtoprotoMatrix -> ProtoprotoMatrix -> Typung mnw -> Matrix
 
 mp :: ProtoprotoMatrix -> Typung mw -> Potenz -> Matrix
+
+
+TODO cut and paste anp2
