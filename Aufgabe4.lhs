@@ -37,7 +37,7 @@ It takes a number and a list of lists of numbers and
 > scale :: Num a => a -> [[a]] -> [[a]]
 > scale = map.map.(*)
 
-then simply maps the lists which have in turn had their elements mapped and multiplyed by s together. this could also be achieved by doing a doulbe list comprahension, but 
+then simply maps the lists which have in turn had their elements mapped and multiplyed by s together (by the way this is done by partial appliance if I understood the concept of currying correctly [we pass around functions here]). this could also be achieved by doing a doulbe list comprahension, but 
 that would be a lot harder to read
 
 > mm :: ProtoprotoMatrix -> ProtoprotoMatrix -> Typung_mnpw -> Matrix
