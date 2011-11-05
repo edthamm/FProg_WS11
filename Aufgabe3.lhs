@@ -18,9 +18,35 @@ erstellt von:
 >type Fuellwert = Integer
 >type Laenge = Integer
 
+>length' :: [a] -> Integer
+>length' v = toInteger(length v)
+
+>take' :: Integer -> [a] -> [a]
+>take' m n = take (fromIntegral m) n
+
+>replicate' :: Integer -> a -> [a]
+>replicate' m n = replicate (fromIntegral m) n
+
+
 anp1 :: [[Integer]] -> Matrix
 
-anp2 :: [[Integer]] -> Zeilen -> Spalten -> Fuellwert -> Matrix
+>anp2 :: [[Integer]] -> Zeilen -> Spalten -> Fuellwert -> Matrix
+>anp2 m z s f
+>   | z < 0 || s < 0 = error "unzulaessig"
+>   | items > z = fitcol (take' z m) s f
+>   | items < z = fitcol extended s f
+>   | otherwise = fitcol m s f
+>   where extended = m ++ (replicate' (z - items) (replicate' s f))
+>         items = length' m
+
+
+>fitcol :: Matrix -> Spalten -> Fuellwert -> Matrix
+>fitcol [] _ _ = []
+>fitcol (z:zs) s f
+>   | items > s = take' s z : fitcol zs s f
+>   | items < s = (z ++ (replicate' (s - items) f)): fitcol zs s f    
+>   | otherwise = z : fitcol zs s f
+>   where items = length' z
 
 
 >transp :: [[Integer]] -> Zeilen -> Spalten -> Fuellwert -> Matrix
