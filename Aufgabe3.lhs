@@ -62,7 +62,7 @@ to do this I write my self the transposition funktion in a seperate helper for b
 
 what happens here is the interesting part first we take all the first elements and put them together, than we do the same with the tails and iterate
 
->transpose' a = (map head a) : transpose (map tail a)
+>transpose' a = (map head a) : transpose' (map tail a)
 
 
 So our job here is to calculate a scalar product, just to make it a little harder, we have to extract our two vectors out of matrices, and this is what we do here
