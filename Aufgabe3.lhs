@@ -45,7 +45,7 @@ So our job here is to calculate a scalar product, just to make it a little harde
 
 i have no idea if this is eaven remotly what this is suppose to do bit ill give it a try...
 
->sp a b l f = scalprod (head(anp2 a 1 l f)) (head(anp2 b l 1 f))
+>sp a b l f = scalprod (head(anp2 a 1 l f)) (head(transpose'(anp2 b l 1 f)))
 
 This is a little helper where sp actually is calcualted feed this with the correct vectors and voila
 
