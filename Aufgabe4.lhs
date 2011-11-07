@@ -29,7 +29,9 @@ erstellt von:
 
 Ok first we normalize to call scale
 
->msk (m,z,s,f) sk = scale sk (anp2 m z s f) -- DO ERROR CASE
+>msk (_,0,_,_) _ = error "unzulaessig" 
+>msk (_,_,0,_) _ = error "unzulaessig" 
+>msk (m,z,s,f) sk = scale sk (anp2 m z s f)
 
 Then we take a look at the helper function.
 It takes a number and a list of lists of numbers and
