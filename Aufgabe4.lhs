@@ -66,7 +66,32 @@ These are the functions taken from exercise 3:
 
 >transpose' :: Matrix ->Matrix
 >transpose' ([]:_) = []
->transpose' a = (map head a) : transpose (map tail a)
+>transpose' a = (map head a) : transpose' (map tail a)
 
-TODO cut and paste anp2
 
+>length' :: [a] -> Integer
+>length' v = toInteger(length v)
+
+>take' :: Integer -> [a] -> [a]
+>take' m n = take (fromIntegral m) n
+
+>replicate' :: Integer -> a -> [a]
+>replicate' m n = replicate (fromIntegral m) n
+
+>anp2 :: [[Integer]] -> Zeilen -> Spalten -> Fuellwert -> Matrix
+>anp2 m z s f
+>   | z < 0 || s < 0 = error "unzulaessig"
+>   | items > z = fitcol (take' z m) s f
+>   | items < z = fitcol extended s f
+>   | otherwise = fitcol m s f
+>   where extended = m ++ (replicate' (z - items) (replicate' s f))
+>         items = length' m
+
+
+>fitcol :: Matrix -> Spalten -> Fuellwert -> Matrix
+>fitcol [] _ _ = []
+>fitcol (z:zs) s f
+>   | items > s = take' s z : fitcol zs s f
+>   | items < s = (z ++ (replicate' (s - items) f)): fitcol zs s f    
+>   | otherwise = z : fitcol zs s f
+>   where items = length' z
