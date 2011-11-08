@@ -29,9 +29,9 @@ erstellt von:
 
 Ok first we normalize to call scale
 
->msk (_,0,_,_) _ = error "unzulaessig" 
->msk (_,_,0,_) _ = error "unzulaessig" 
->msk (m,z,s,f) sk = scale sk (anp2 m z s f)
+>msk (m,z,s,f) sk 
+>	| z < 0 || s < 0 = error "unzulaessig"
+>	| otherwise = scale sk (anp2 m z s f)
 
 Then we take a look at the helper function.
 It takes a number and a list of lists of numbers and
@@ -46,7 +46,9 @@ that would be a lot harder to read
 
 This is the fitting step. Normalize everything the way we are supposed to.
 
->mm a b (m,n,p,f) = mmult (anp2 a m n f) (anp2 b n p f)
+>mm a b (m,n,p,f) 
+>	| n == 0 = error "unzulaessig"
+>	| otherwise = mmult (anp2 a m n f) (anp2 b n p f)
 
 After that we once again call a little helper
 
@@ -58,11 +60,40 @@ to get the desired list of lists.
 
 >mmult a b = [map (sum . zipWith (*) r) $ transpose' b | r <- a]
 
+Matrixsumme bilden
 
-ms :: ProtoprotoMatrix ->ProtoprotoMatrix ->Typung_mnw ->Matrix
+>ms :: ProtoprotoMatrix ->ProtoprotoMatrix ->Typung_mnw ->Matrix
+>ms a b (m,n,w) = madd (anp2 a m n w) (anp2 b m n w) -- matrizen normalisieren
 
-mp :: ProtoprotoMatrix ->Typung_mw ->Potenz ->Matrix
+Matrixsumme bilden
 
+>madd :: Matrix -> Matrix -> Matrix
+>madd [] [] = []
+>madd (a:as) (b:bs) = [(maddrow a b)] ++ (madd as bs)
+
+>maddrow :: [Integer] -> [Integer] -> [Integer]
+>maddrow [] [] = []
+>maddrow (a:as) (b:bs) = [a+b] ++ (maddrow as bs)
+
+matrixpotenz bilden
+
+>mp :: ProtoprotoMatrix ->Typung_mw ->Potenz ->Matrix
+>mp a (m,w) n = mpot (anp2 a m m w) n -- matrizen normalisieren
+
+matrixpotenz bilden
+
+>mpot :: Matrix -> Potenz -> Matrix
+>mpot a 0 = meinheit (length' a) (length' a) 0
+>mpot a 1 = a
+>mpot a n
+>	| n > 1 = mmult a (mpot a (n-1))
+>	| otherwise = error "unzulaessig"
+
+einheitsmatrix bilden
+
+>meinheit :: Integer -> Integer -> Integer -> Matrix
+>meinheit l 0 _ = []
+>meinheit l n c = [([0*x | x <- [0..(c-1)]] ++ [1] ++ [0*x | x <- [2..(l-c)]])] ++ (meinheit l (n-1) (c+1))
 
 These are the functions taken from exercise 3:
 
