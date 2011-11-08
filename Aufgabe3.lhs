@@ -28,7 +28,32 @@ erstellt von:
 >replicate' m n = replicate (fromIntegral m) n
 
 
-anp1 :: [[Integer]] -> Matrix
+>anp1 :: [[Integer]] -> Matrix
+>anp1 [] = [[1]]
+>anp1 matrix = _fillMatrix matrix 0 (_maxLength matrix 0)
+
+groeszte laenge einer reihe ermitteln
+
+>_maxLength :: [[Integer]] -> Integer -> Integer
+>_maxLength (x:xs) l
+>	| (length' xs) == 0 && (length' x) <= l = l
+>	| (length' xs) == 0 && (length' x) > l = (length' x)
+>	| (length' x) <= l = _maxLength xs l
+>	| otherwise = _maxLength xs (length' x)
+
+matrix mit werten auffüllen
+
+>_fillMatrix :: [[Integer]] -> Fuellwert -> Spalten -> [[Integer]]
+>_fillMatrix (x:xs) f l
+>	| (length' xs) == 0 = [_extendRow x f l]
+>	| otherwise = [(_extendRow x f l)] ++ (_fillMatrix xs f l)
+
+reihe erweitern und mit werten auffuellen
+
+>_extendRow :: [Integer] -> Fuellwert -> Spalten -> [Integer]
+>_extendRow row f l
+>	| (length' row) < l = (_extendRow (row ++ [f]) f l)
+>	| otherwise = row
 
 >anp2 :: [[Integer]] -> Zeilen -> Spalten -> Fuellwert -> Matrix
 >anp2 m z s f
