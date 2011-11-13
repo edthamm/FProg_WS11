@@ -1,0 +1,36 @@
+{- Aufgabe 01 -}
+{- 1.1 -}
+all (\x->(unlines.lines)x/=x) ctxlines
+(((<)2).length) ctxlines
+any (((<)2).length.lines) ctxlines
+{- 1.2 -}
+all (\x->(lines.unlines)x/=x) ctxunlines
+(((<)2).length) ctxunlines
+any (((<)2).length.unlines) ctxunlines
+{- 1.3 -}
+all (\x->(unwords.words)x/=x) ctxwords
+(((<)2).length) ctxwords
+any (((<)2).length.words) ctxwords
+{- 1.4 -}
+all (\x->(words.unwords)x/=x) ctxunwords
+(((<)2).length) ctxunwords
+any (((<)2).length.unwords) ctxunwords
+{- Aufgabe 02 -}
+-- UNKLAR! Soll das letzte \n im Resultat dabei sein oder nicht?
+unixtac "1\n2\n3\n4" == "4\n3\n2\n1\n"
+unixhead 2 "1\n2\n3\n4" == "1\n2\n"
+unixtail 2 "1\n2\n3\n4" == "3\n4\n"
+unixgrep "abc" "sabcs\nabci\n\nuills\nsdfabc\n\n" == "sabcs\nabci\nsdfabc\n"
+unixgrep "" "1\n2\n3\n4\n5" == "1\n2\n3\n4\n5\n"
+{- Aufgabe 03 -}
+unixtac' "1\n2\n3\n4" == "4\n3\n2\n1\n"
+unixhead' 2 "1\n2\n3\n4" == "1\n2\n"
+unixtail' 2 "1\n2\n3\n4" == "3\n4\n"
+unixgrep' "abc" "sabcs\nabci\n\nuills\nsdfabc\n\n" == "sabcs\nabci\nsdfabc\n"
+unixgrep' "" "1\n2\n3\n4\n5" == "1\n2\n3\n4\n5\n"
+{- Aufgabe 04 -}
+unixrev "123\n456\n7890" == "321\n654\n0987\n"
+wordrev "1 2\n3 4 5\n7 8" == "2 1\n5 4 3\n8 7\n"
+{- Aufgabe 05 -}
+unixwcw "1\n2 3 4\n5\n6\n\n7\n\n\n" == 7
+unixwc "1\n2 3 4\n5\n6\n\n7\n\n\n" == (8, 7, 17)
