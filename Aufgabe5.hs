@@ -15,6 +15,12 @@ erstellt von:
 -}
 
 -- Part1
+ctxlines :: [String]
+ctxlines = ["hello\nhi", "a\nb\nc", "hello"]
+
+--ctxunlines :: [String] 
+--ctxwords :: [String]
+--ctxunwords :: [String]
 {-
 all (\x->(unlines.lines)x/=x) ctxlines
 (((<)2).length) ctxlines
