@@ -1,6 +1,7 @@
 module Aufgabe5 where
 
 import Data.List
+import Debug.Trace
 
 {-
 ############################################################
@@ -41,7 +42,10 @@ unixrev :: String -> String
 unixrev s = unlines$map reverse (lines(s))
 
 wordrev :: String -> String
-wordrev s = unwords$map reverse (words(s))
+wordrev s = unlines$map unwords $map reverse $map words $lines s
+
+
+
 -- Part5
 unixwcw :: String -> Int
 unixwcw s = length$words(s)
