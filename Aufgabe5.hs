@@ -22,11 +22,21 @@ any (((<)2).length.lines) ctxlines
 -}
 
 -- Part2
-{-unixtac :: String -> String
+--TODO Error cases.
+
+unixtac :: String -> String
+unixtac s =unlines$reverse$lines s
+
 unixhead :: Int -> String -> String
+unixhead i s = unlines$take i $lines s
+
 unixtail :: Int -> String -> String
+unixtail i s = unlines$reverse$take i $reverse$lines s 
+
 unixgrep :: String -> String -> String
--}
+unixgrep "" qs = unlines$lines qs
+unixgrep ss qs = unlines$ [a| a <- b , isInfixOf ss a]
+    where b = lines qs 
 
 -- Part3
 {-
