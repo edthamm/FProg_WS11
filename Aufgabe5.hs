@@ -18,40 +18,68 @@ erstellt von:
 ctxlines :: [String]
 ctxlines = ["hello\nhi", "a\nb\nc", "hello"]
 
---ctxunlines :: [String] 
---ctxwords :: [String]
---ctxunwords :: [String]
-{-
-all (\x->(unlines.lines)x/=x) ctxlines
-(((<)2).length) ctxlines
-any (((<)2).length.lines) ctxlines
--}
+ctxunlines :: [[String]] 
+ctxunlines = [["hallo","hi\n"], ["a\n","b","c"], ["hal\nlo"]]
+
+ctxwords :: [String]
+ctxwords = ["hello hi ", " a b c", "hel  lo"," "]
+
+ctxunwords :: [[String]]
+ctxunwords = [["hallo","hi\n"], ["a\n","b","c"], ["hal\nlo"],["a    b"]]
 
 -- Part2
---TODO Error cases.
 
 unixtac :: String -> String
-unixtac s =unlines$reverse$lines s
+unixtac s 
+    | (isSuffixOf "\n" s) = unlines$reverse$lines s
+    | otherwise = _replaceFirstNewLine $unlines$reverse$lines s
+
+_replaceFirstNewLine :: String -> String
+_replaceFirstNewLine "" = ""
+_replaceFirstNewLine (s:xs)
+    | [s] == "\n" = xs
+    | otherwise = s : (_replaceFirstNewLine xs)
 
 unixhead :: Int -> String -> String
-unixhead i s = unlines$take i $lines s
+unixhead i s
+    | (i == (length $lines s)) && (isSuffixOf "\n" s) == False = reverse$tail$reverse$unlines$take i $lines s
+    | otherwise = unlines$take i $lines s
 
 unixtail :: Int -> String -> String
-unixtail i s = unlines$reverse$take i $reverse$lines s 
+unixtail i s
+    | (isSuffixOf "\n" s) == False = reverse$tail$reverse$unlines$reverse$take i $reverse$lines s
+    | otherwise = unlines$reverse$take i $reverse$lines s
 
 unixgrep :: String -> String -> String
-unixgrep "" qs = unlines$lines qs
+unixgrep "" qs = unlines$lines qs -- grep gibt jedes gefundene mit newline am ende aus
 unixgrep ss qs = unlines$ [a| a <- b , isInfixOf ss a]
     where b = lines qs 
 
 -- Part3
-{-
+
 aslines :: ([String]->[String]) -> String -> String
+aslines f s = unlines$f $lines s
+
+
 unixtac' :: String -> String
+unixtac' s
+    | (isSuffixOf "\n" s) = aslines reverse s
+    | otherwise = _replaceFirstNewLine $aslines reverse s
+
 unixhead' :: Int -> String -> String
+unixhead' i s
+    | (i == (length $lines s)) && (isSuffixOf "\n" s) == False = reverse$tail$reverse$aslines (take i) s
+    | otherwise = aslines (take i) s
+
 unixtail' :: Int -> String -> String
+unixtail' i s 
+    | (isSuffixOf "\n" s) == True = aslines (drop((length(lines s)) - i)) s
+    | otherwise = reverse$tail$reverse$aslines (drop((length(lines s)) - i)) s
+
 unixgrep' :: String -> String -> String
--}
+unixgrep' "" qs = aslines (\x->x) qs -- grep gibt jedes gefundene mit newline am ende aus 
+unixgrep' ss qs = aslines (filter (isInfixOf ss)) qs
+ 
 
 -- Part4
 unixrev :: String -> String
