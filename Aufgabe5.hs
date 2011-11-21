@@ -29,11 +29,11 @@ ctxunwords = [["hallo","hi\n"], ["a\n","b","c"], ["hal\nlo"],["a    b"]]
 
 -- Part2
 
--- Hängt Zeilen in umgekehrter Richtung aneinander
+-- Haengt Zeilen in umgekehrter Richtung aneinander
 unixtac :: String -> String
 unixtac s 
     | (isSuffixOf "\n" s) = unlines$reverse$lines s
-    | otherwise = _replaceFirstNewLine $unlines$reverse$lines s -- Sonderfall falls der String am Ende kein \n enthält
+    | otherwise = _replaceFirstNewLine $unlines$reverse$lines s -- Sonderfall falls der String am Ende kein \n enthaelt
 
 -- erstes Vorkommen von \n entfernen
 _replaceFirstNewLine :: String -> String
