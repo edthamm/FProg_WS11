@@ -1,0 +1,11 @@
+Testfall: {-2,3-}  ; Testfall FALSCH
+Erwartet: {-2,3-}[i|l<-["ab":"":repeat "cde"],i<-[0..9],(lines.unixhead i.unlines)l/=take i l] == []
+Ausgabe:  {-2,3-}[i|l<-["ab":"":repeat "cde"],i<-[0..9],(lines.unixhead i.unlines)l/=take i l] == ERROR - Garbage collection fails to reclaim sufficient space  
+
+-----------------
+Testfall: {-2,5-}(lines.unixtail 2.unlines)["3"|_<-[1..100000]]  ; Testfall FALSCH
+Erwartet: {-2,5-}(lines.unixtail 2.unlines)["3"|_<-[1..100000]] == ["3","3"]
+Ausgabe:  {-2,5-}(lines.unixtail 2.unlines)["3"|_<-[1..100000]] ==
+
+
+und die selben mit '
