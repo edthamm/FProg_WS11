@@ -31,6 +31,9 @@ data LTree = LNode Integer [LTree] deriving Show
 
 --isST :: BTree -> Bool
 
+mkControl :: String -> Control
+mkControl s = [o | o <- s ,o == 'l'|| o == 'r' || o == 'm']
+
 --apply :: Control -> Data -> Tree -> Integer
 
 --mapLT :: Func -> LTree -> LTree
