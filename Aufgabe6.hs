@@ -104,9 +104,10 @@ apply [] d (Node t _ _ _) = (t d)
 -- check where to go next, apply the function till here (gives a "semi-open" one) desc in the correct subtree, hand down the
 -- function and the shortend ctrl string
 apply c d (Node t v1 v2 v3)
-    | (head $ mkControl c) == 'l' = apply (drop 1 c) (t d) v1
-    | (head $ mkControl c) == 'm' = apply (drop 1 c) (t d) v2
-    | (head $ mkControl c) == 'r' = apply (drop 1 c) (t d) v3
+    | c_element == 'l' = apply (drop 1 c) (t d) v1
+    | c_element == 'm' = apply (drop 1 c) (t d) v2
+    | c_element == 'r' = apply (drop 1 c) (t d) v3
+    where c_element = head $ mkControl c
 
 mapLT :: Func -> LTree -> LTree
 -- nowhere to go apply function and return
