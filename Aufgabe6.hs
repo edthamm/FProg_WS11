@@ -1,7 +1,5 @@
 module Aufgabe6 where
 
-import Data.List
-import Debug.Trace
 
 {-
 ############################################################
@@ -13,6 +11,7 @@ erstellt von:
 
 ############################################################
 -}
+
 
 --Typedefs to spec
 data DOrd = Infix | Praefix | Postfix |
@@ -34,12 +33,22 @@ data LTree = LNode Integer [LTree] deriving Show
 mkControl :: String -> Control
 mkControl s = [o | o <- s ,o == 'l'|| o == 'r' || o == 'm']
 
-apply :: Control -> Data -> Tree -> Integer
-apply c d (Leaf n) = n d
-apply [] d (Node n _ _ _) = n d
-apply c d (Node n v1 v2 v3)
-    | (head $ mkControl c) == 'l' = apply (drop 1 c) (n d) v1
-    | (head $ mkControl c) == 'm' = apply (drop 1 c) (n d) v2
-    | (head $ mkControl c) == 'r' = apply (drop 1 c) (n d) v3
+-- directly copying the tcs from pdf gives a ` instead of a ' for character delimiter
+-- this breaks my hugs 
 
---mapLT :: Func -> LTree -> LTree
+apply :: Control -> Data -> Tree -> Integer
+apply c d (Leaf t) = (t d)
+apply [] d (Node t _ _ _) = (t d)
+apply c d (Node t v1 v2 v3)
+    | (head $ mkControl c) == 'l' = apply (drop 1 c) (t d) v1
+    | (head $ mkControl c) == 'm' = apply (drop 1 c) (t d) v2
+    | (head $ mkControl c) == 'r' = apply (drop 1 c) (t d) v3
+
+mapLT :: Func -> LTree -> LTree
+mapLT a (LNode b []) = (LNode (a b) [])
+mapLT a (LNode b c) = (LNode (a b) (appl a c))
+
+appl :: Func -> [LTree] -> [LTree]
+appl _ [] = []
+appl a ((LNode b xs):ys) = (LNode (a b) (appl a xs)) : appl a ys
+
