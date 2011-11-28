@@ -34,6 +34,12 @@ data LTree = LNode Integer [LTree] deriving Show
 mkControl :: String -> Control
 mkControl s = [o | o <- s ,o == 'l'|| o == 'r' || o == 'm']
 
---apply :: Control -> Data -> Tree -> Integer
+apply :: Control -> Data -> Tree -> Integer
+apply c d (Leaf n) = n d
+apply [] d (Node n _ _ _) = n d
+apply c d (Node n v1 v2 v3)
+    | (head $ mkControl c) == 'l' = apply (drop 1 c) (n d) v1
+    | (head $ mkControl c) == 'm' = apply (drop 1 c) (n d) v2
+    | (head $ mkControl c) == 'r' = apply (drop 1 c) (n d) v3
 
 --mapLT :: Func -> LTree -> LTree
