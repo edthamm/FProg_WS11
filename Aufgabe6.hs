@@ -97,15 +97,21 @@ mkControl s = [o | o <- s ,o == 'l'|| o == 'r' || o == 'm']
 -- this breaks my hugs 
 
 apply :: Control -> Data -> Tree -> Integer
+-- if its a leaf just apply and be happy
 apply c d (Leaf t) = (t d)
+-- if its a node but no control info is left apply and return
 apply [] d (Node t _ _ _) = (t d)
+-- check where to go next, apply the function till here (gives a "semi-open" one) desc in the correct subtree, hand down the
+-- function and the shortend ctrl string
 apply c d (Node t v1 v2 v3)
     | (head $ mkControl c) == 'l' = apply (drop 1 c) (t d) v1
     | (head $ mkControl c) == 'm' = apply (drop 1 c) (t d) v2
     | (head $ mkControl c) == 'r' = apply (drop 1 c) (t d) v3
 
 mapLT :: Func -> LTree -> LTree
+-- nowhere to go apply function and return
 mapLT a (LNode b []) = (LNode (a b) [])
+-- places left to go, apply function and iterate
 mapLT a (LNode b c) = (LNode (a b) (appl a c))
 
 appl :: Func -> [LTree] -> [LTree]
