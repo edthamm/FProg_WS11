@@ -25,10 +25,70 @@ data Tree = Leaf Func
           | Node Func Tree Tree Tree
 data LTree = LNode Integer [LTree] deriving Show
 
+-- knotenwerte des gesamten baums in der angegebenen ordnung in einer liste ausgeben
+flatten :: BTree -> DOrd -> [Int]
+flatten Nil                    _        = []
+flatten (BNode val left right) Infix    = flatten_infix    (BNode val left right)
+flatten (BNode val left right) Praefix  = flatten_praefix  (BNode val left right)
+flatten (BNode val left right) Postfix  = flatten_postfix  (BNode val left right)
+flatten (BNode val left right) GInfix   = flatten_ginfix   (BNode val left right)
+flatten (BNode val left right) GPraefix = flatten_gpraefix (BNode val left right)
+flatten (BNode val left right) GPostfix = flatten_gpostfix (BNode val left right)
 
---flatten :: BTree -> DOrd -> [Int]
+-- infix: left - root - right
+flatten_infix :: BTree -> [Int]
+flatten_infix (BNode val Nil  Nil  ) = [val]
+flatten_infix (BNode val Nil  right) = [val] ++ (flatten_infix right)
+flatten_infix (BNode val left Nil  ) = (flatten_infix left) ++ [val]
+flatten_infix (BNode val left right) = (flatten_infix left) ++ [val] ++ (flatten_infix right)
 
---isST :: BTree -> Bool
+-- mirrored infix: right - root - left
+flatten_ginfix :: BTree -> [Int]
+flatten_ginfix (BNode val Nil  Nil  ) = [val]
+flatten_ginfix (BNode val Nil  right) = (flatten_infix right) ++ [val]
+flatten_ginfix (BNode val left Nil  ) = [val] ++ (flatten_infix left)
+flatten_ginfix (BNode val left right) = (flatten_infix right) ++ [val] ++ (flatten_infix left)
+
+-- praefix: root - left - right
+flatten_praefix :: BTree -> [Int]
+flatten_praefix (BNode val Nil  Nil  ) = [val]
+flatten_praefix (BNode val Nil  right) = [val] ++ (flatten_infix right)
+flatten_praefix (BNode val left Nil  ) = [val] ++ (flatten_infix left)
+flatten_praefix (BNode val left right) = [val] ++ (flatten_infix left) ++ (flatten_infix right)
+
+-- mirrored praefix: right - left - root
+flatten_gpraefix :: BTree -> [Int]
+flatten_gpraefix (BNode val Nil  Nil  ) = [val]
+flatten_gpraefix (BNode val Nil  right) = (flatten_infix right) ++ [val]
+flatten_gpraefix (BNode val left Nil  ) = (flatten_infix left) ++ [val]
+flatten_gpraefix (BNode val left right) = (flatten_infix right) ++ (flatten_infix left) ++ [val]
+
+-- postfix: left - right - root
+flatten_postfix :: BTree -> [Int]
+flatten_postfix (BNode val Nil  Nil  ) = [val]
+flatten_postfix (BNode val Nil  right) = (flatten_infix right) ++ [val]
+flatten_postfix (BNode val left Nil  ) = (flatten_infix left) ++ [val]
+flatten_postfix (BNode val left right) = (flatten_infix left) ++ (flatten_infix right) ++ [val]
+
+-- mirrored postfix: root - right - left
+flatten_gpostfix :: BTree -> [Int]
+flatten_gpostfix (BNode val Nil  Nil  ) = [val]
+flatten_gpostfix (BNode val Nil  right) = [val] ++ (flatten_infix right)
+flatten_gpostfix (BNode val left Nil  ) = [val] ++ (flatten_infix left)
+flatten_gpostfix (BNode val left right) = [val] ++ (flatten_infix right) ++ (flatten_infix left)
+
+-- ueberprueft ob ein baum ein suchbaum ist
+isST :: BTree -> Bool
+isST Nil = True
+isST t = _checkOrder$flatten t Infix -- infix ausgabe des baums in die hilfsfunktion schicken
+
+-- ueberprueft ob die liste lauter zahlen enthaelt die (echt) groeszer sind als ihre vorgaenger
+_checkOrder :: [Int] -> Bool
+_checkOrder [] = True
+_checkOrder (x:xs)
+	| length xs == 0 = True
+	| x < (head xs) = True && (_checkOrder xs)
+	| otherwise = False
 
 mkControl :: String -> Control
 mkControl s = [o | o <- s ,o == 'l'|| o == 'r' || o == 'm']
