@@ -46,10 +46,30 @@ class Structure s where
 
 
 -- SubPart 1.1
-
+instance Eq a => Eq (BTree a) where
+    _ == _ = True
+    
+instance Eq a => Eq (LTree a) where
+    _ == _ = True
 
 -- SubPart 1.2
+instance Structure (BTree a) where
+    noOfSources _ = 1
+    noOfSinks _ = 3 -- to be implemented
+    notSourceConnected _ = []
+    notSinkConnected _ = []
 
+instance Structure (LTree a) where
+    noOfSources _ = 1
+    noOfSinks _ = 3 --to be implemented
+    notSourceConnected _ = []
+    notSinkConnected _ = []
+
+instance Structure ALgraph where
+    noOfSources _ = 1 -- all of this is to be implemented
+    noOfSinks _ = 3
+    notSourceConnected _ = []
+    notSinkConnected _ = []
 
 -- Part 2
 accept :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Word a) -> Bool
