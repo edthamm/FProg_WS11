@@ -42,7 +42,15 @@ class Structure s where
     notSinkConnected :: s -> [Name]
 
 
+-- Part 1
 
---Part 2
+
+-- SubPart 1.1
+
+
+-- SubPart 1.2
+
+
+-- Part 2
 accept :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Word a) -> Bool
 accept _ _ _ _ = True
