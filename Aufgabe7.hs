@@ -40,3 +40,9 @@ class Structure s where
     noOfSinks :: s -> Integer
     notSourceConnected :: s -> [Name]
     notSinkConnected :: s -> [Name]
+
+
+
+--Part 2
+accept :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Word a) -> Bool
+accept _ _ _ _ = True
