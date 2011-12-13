@@ -35,7 +35,38 @@ type VisFromRight = Integer
 
 -- part 1
 
---isPostfix :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Postfix a) -> Bool
+isPostfix :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Postfix a) -> Bool
+isPostfix _ start endstates [] = _isEndState start endstates
+isPostfix (AMg automaton) start endstates word
+    | word == [] = _isEndState start endstates
+    | _transitionAllowed (_getRow (AMg automaton) 0 start) (head word) == True = isPostfix (AMg automaton) (_getNewState (_getRow (AMg automaton) 0 start) (head word) 0) endstates (tail word)
+    | otherwise = False
+
+-- get a row from the automaton
+_getRow :: Eq a => (Automaton a) -> StartState -> State -> (Row a)
+_getRow (AMg (x:xs)) start state
+    | start == state = x
+    | otherwise = _getRow (AMg xs) (start+1) state
+
+-- get the new state - after the transition
+-- use this function only if you have checked that the transition is allowed
+_getNewState :: Eq a => (Row a) -> a -> StartState -> State
+_getNewState [] _ _ = error "this should never happen ..."
+_getNewState (x:xs) transition state
+    | (length (filter (==transition) x) /= 0) = state
+    | otherwise = _getNewState xs transition (state+1)
+
+-- check if a transition between states with a given symbol is allowed
+_transitionAllowed :: Eq a => (Row a) -> a -> Bool
+_transitionAllowed [] transition = False
+_transitionAllowed (x:xs) transition = (length (filter (==transition) x) /= 0) || _transitionAllowed xs transition
+
+-- check if the given state is an acceptable endstate
+_isEndState :: State -> AcceptingStates -> Bool
+_isEndState _ [] = False
+_isEndState s (x:xs)
+    | s == x = True
+    | otherwise = _isEndState s xs
 
 -- part 2
 --givePrefix :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Postfix a) -> (Maybe (Prefix a))
