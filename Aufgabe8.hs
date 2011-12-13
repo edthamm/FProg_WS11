@@ -1,5 +1,5 @@
 module Aufgabe8 where
-
+import Data.List
 
 {-
 ############################################################
@@ -35,19 +35,61 @@ type VisFromRight = Integer
 
 -- part 1
 
-isPostfix :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Postfix a) -> Bool
+--isPostfix :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Postfix a) -> Bool
 
 -- part 2
-givePrefix :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Postfix a) -> (Maybe (Prefix a))
+--givePrefix :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Postfix a) -> (Maybe (Prefix a))
 
 -- part 3
 -- (a)
 isValid :: Skyscraperline -> Bool
+isValid line = (_checkLeft left content) && (_checkRight right content) && (_checkContent content)
+    where left = head line
+          right = last line
+          content = reverse $ tail $ reverse $ tail line
+
+type Count = Integer
+type Highest = Integer
+
+-- check the left view
+_checkLeft :: VisFromLeft -> Skyscraperline -> Bool
+_checkLeft left line = _checkLeft_ left 0 0 line
+_checkLeft_ :: VisFromLeft -> Count -> Highest -> Skyscraperline -> Bool
+_checkLeft_ left count _ [] = left == count
+_checkLeft_ left count highest (x:xs)
+    | x > highest = _checkLeft_ left (count+1) x xs
+    | otherwise = _checkLeft_ left count highest xs
+
+-- check the right view
+_checkRight :: VisFromRight -> Skyscraperline -> Bool
+_checkRight right line = _checkRight_ right 0 0 (reverse line)
+_checkRight_ :: VisFromRight -> Count -> Highest -> Skyscraperline -> Bool
+_checkRight_ right count _ [] = right == count
+_checkRight_ right count highest (x:xs)
+    | x > highest = _checkRight_ right (count+1) x xs
+    | otherwise = _checkRight_ right count highest xs
+
+-- check if the "content" is right: only 10, 20, 30, ..., n*10 allowed
+_checkContent :: Skyscraperline -> Bool
+_checkContent line = (sort line) == ([x*10 | x <- [1..(_length line)]])
+
+-- length for integers
+_length :: [a] -> Integer
+_length [] =  0
+_length(x:xs) = 1 + _length xs
+
 -- (b)
-computeVisibility :: Skyscraperline -> Skyscraperline
+--computeVisibility :: Skyscraperline -> Skyscraperline
 -- (c)
-buildSkyscrapers :: Length -> VisFromLeft -> VisFromRight -> Maybe Skyscraperline
+--buildSkyscrapers :: Length -> VisFromLeft -> VisFromRight -> Maybe Skyscraperline
 -- (d)
-noOfSkyscraperLines :: Length -> VisFromLeft -> VisFromRight -> Integer
+--noOfSkyscraperLines :: Length -> VisFromLeft -> VisFromRight -> Integer
 -- (e)
-allSkyscraperLines :: Length -> VisFromLeft -> VisFromRight -> [Skyscraperline]
+--allSkyscraperLines :: Length -> VisFromLeft -> VisFromRight -> [Skyscraperline]
+
+_buildAllLines :: Length -> [Skyscraperline]
+_buildAllLines l = _permutation [x*10 | x <- [1..l]]
+
+_permutation :: Skyscraperline -> [Skyscraperline]
+_permutation [] = [[]]
+_permutation xs = [x:ys | x <- xs, ys <- _permutation (delete x xs)]
