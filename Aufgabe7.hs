@@ -55,13 +55,15 @@ instance Eq a => Eq (LTree a) where
 -- SubPart 1.2
 instance Structure (BTree a) where
     noOfSources _ = 1
-    noOfSinks _ = 3 -- to be implemented
+    noOfSinks (BLeaf _ _) = 1
+    noOfSinks (BNode _ _ left right) = (noOfSinks left) + (noOfSinks right)
     notSourceConnected _ = []
     notSinkConnected _ = []
 
 instance Structure (LTree a) where
     noOfSources _ = 1
-    noOfSinks _ = 3 --to be implemented
+    noOfSinks (LNode _ _ []) = 1
+    noOfSinks (LNode _ _ list) = sum [noOfSinks x | x <- list]
     notSourceConnected _ = []
     notSinkConnected _ = []
 
@@ -70,6 +72,8 @@ instance Structure ALgraph where
     noOfSinks _ = 3
     notSourceConnected _ = []
     notSinkConnected _ = []
+
+-- helper functions
 
 -- Part 2
 accept :: Eq a => (Automaton a) -> StartState -> AcceptingStates -> (Word a) -> Bool
